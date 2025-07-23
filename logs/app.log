@@ -1,0 +1,190 @@
+Jul 22, 2025 1:08:45 AM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 1:08:56 AM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: shatru
+Jul 22, 2025 1:09:12 AM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=admin
+Jul 22, 2025 1:16:45 AM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=
+Jul 22, 2025 1:17:00 AM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=shatru
+Jul 22, 2025 1:17:12 AM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 1:17:29 AM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: shatru
+Jul 22, 2025 1:17:41 AM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=admin
+Jul 22, 2025 1:18:06 AM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=doe
+Jul 22, 2025 1:18:35 AM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 1:19:42 AM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 5:18:28 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 5:18:31 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: 
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/file.fxml:20
+
+Jul 22, 2025 5:19:58 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 5:51:47 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 5:53:04 PM com.gui.app.controller.FileController handleCreateFile
+INFO: Created file: tempfile
+Jul 22, 2025 5:53:25 PM com.gui.app.controller.FileController handleCreateFile
+SEVERE: Error creating file: Failed to upload part 0
+Jul 22, 2025 5:53:25 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 5:53:52 PM com.gui.app.controller.FileController handleCreateFile
+INFO: Created file: tempfile
+Jul 22, 2025 5:54:13 PM com.gui.app.controller.FileController handleCreateFile
+SEVERE: Error creating file: Failed to upload part 0
+Jul 22, 2025 7:59:12 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 8:00:42 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 8:05:18 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 8:05:44 PM com.gui.app.controller.FileController handleCreateFile
+INFO: Created file: text
+Jul 22, 2025 8:06:06 PM com.gui.app.controller.FileController handleCreateFile
+SEVERE: Error creating file: Failed to upload part 0
+Jul 22, 2025 8:06:48 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 8:09:32 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 8:09:34 PM com.gui.app.controller.DashboardController handleUpload
+INFO: started handleUpload()==>
+Jul 22, 2025 8:09:41 PM com.gui.app.controller.DashboardController handleUpload
+INFO: UPLOAD: delloite_nterview.txt uploaded by shatru
+Jul 22, 2025 8:10:02 PM com.gui.app.controller.DashboardController handleUpload
+SEVERE: ERROR: Failed to upload part 0
+Jul 22, 2025 8:10:49 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 22, 2025 8:44:52 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: lakhan logged in.
+Jul 22, 2025 8:46:15 PM com.gui.app.controller.FileController handleCreateFile
+INFO: Created file: test
+Jul 22, 2025 8:48:10 PM com.gui.app.controller.FileController handleCreateFile
+INFO: Created file: tempfile
+Jul 22, 2025 8:48:41 PM com.gui.app.controller.FileController handleDeleteFile
+INFO: Deleted file: test
+Jul 22, 2025 8:48:59 PM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: lakhan
+Jul 22, 2025 8:49:12 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 22, 2025 8:50:10 PM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: shatru
+Jul 22, 2025 8:50:20 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: lakhan logged in.
+Jul 22, 2025 8:51:02 PM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: lakhan
+Jul 22, 2025 8:51:28 PM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=test
+Jul 23, 2025 4:37:02 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 4:37:07 PM com.gui.app.controller.DashboardController handleShare
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/Acl.fxml:9
+
+Jul 23, 2025 4:37:26 PM com.gui.app.controller.DashboardController handleShare
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/Acl.fxml:9
+
+Jul 23, 2025 4:38:07 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:15
+
+Jul 23, 2025 4:38:12 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:15
+
+Jul 23, 2025 4:38:20 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:15
+
+Jul 23, 2025 4:38:22 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:15
+
+Jul 23, 2025 4:38:26 PM com.gui.app.controller.DashboardController handleDownload
+INFO: started handleDownload()==>
+Jul 23, 2025 4:38:31 PM com.gui.app.controller.DashboardController handleUpload
+INFO: started handleUpload()==>
+Jul 23, 2025 4:38:51 PM com.gui.app.controller.DashboardController handleLogout
+INFO: LOGOUT: shatru
+Jul 23, 2025 4:43:15 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 4:48:46 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 23, 2025 6:58:50 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 6:58:57 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Error resolving onAction='#handleShare', either the event handler is not in the Namespace or there is an error in the script.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:43
+
+Jul 23, 2025 6:59:03 PM com.gui.app.controller.DashboardController handleShare
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/Acl.fxml:9
+
+Jul 23, 2025 6:59:09 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Error resolving onAction='#handleShare', either the event handler is not in the Namespace or there is an error in the script.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:43
+
+Jul 23, 2025 7:07:39 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 7:07:41 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Error resolving onAction='#handleShare', either the event handler is not in the Namespace or there is an error in the script.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:43
+
+Jul 23, 2025 7:07:43 PM com.gui.app.controller.DashboardController handleShare
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/Acl.fxml:9
+
+Jul 23, 2025 7:10:06 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 7:10:08 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: 
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:18
+
+Jul 23, 2025 7:10:17 PM com.gui.app.controller.DashboardController handleShare
+SEVERE: ERROR: Insets is not a valid type.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/Acl.fxml:9
+
+Jul 23, 2025 7:10:21 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: 
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:18
+
+Jul 23, 2025 7:14:18 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 7:14:20 PM com.gui.app.controller.DashboardController handleFileManager
+SEVERE: ERROR: Error resolving onAction='#handleShare', either the event handler is not in the Namespace or there is an error in the script.
+/E:/cloud-load-balancer/gui-app/target/classes/fxml/File.fxml:33
+
+Jul 23, 2025 7:19:48 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 23, 2025 7:24:38 PM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=shatr
+Jul 23, 2025 7:24:46 PM com.gui.app.controller.LoginController handleLogin
+WARNING: LOGIN FAILED: Attempted login with username=shatr
+Jul 23, 2025 7:24:52 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 7:29:52 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 23, 2025 7:31:58 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 7:37:28 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
+Jul 23, 2025 8:25:42 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 8:27:31 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 8:27:53 PM com.gui.app.controller.FileEditorController handleSave
+INFO: Created file: test
+Jul 23, 2025 8:27:53 PM com.gui.app.controller.FileEditorController handleSave
+SEVERE: Error creating file: Failed to upload part 0
+Jul 23, 2025 8:29:33 PM com.gui.app.controller.LoginController handleLogin
+INFO: LOGIN: shatru logged in.
+Jul 23, 2025 8:35:03 PM com.gui.app.controller.DashboardController lambda$startAutoLogoutTimer$2
+INFO: SESSION TIMEOUT: shatru
