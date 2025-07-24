@@ -14,7 +14,9 @@ import com.gui.app.session.*;
 import com.gui.app.model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.stage.*;
 import javafx.scene.layout.StackPane;
+import com.gui.app.db.LocalFileManager;
 
 import java.sql.SQLException;
 public class FileEditorController {
@@ -37,38 +39,46 @@ public class FileEditorController {
     private void handleSave() throws IOException {
         String filename = fileNameField.getText();
         String content = fileContentArea.getText();
-
         if (filename.isEmpty()) {
-            showAlert("File name is required.");
-            return;
-        }
-
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "File Name required!!");
+            alert.show();
+        return;
+         }
         Path filePath = Paths.get("tempfiles", filename);
         try {
             Files.createDirectories(filePath.getParent());
             Files.writeString(filePath, content);
             logger.info("Created file: " + filename);
-            
+            SessionManager session = SessionManager.getInstance();
+            String username = session.getCurrentUser().getUsername();
+            boolean success;
             if (mode.equals("create")) {
-                   FileUtils.chunkAndEncryptAndUpload(filePath.toFile(), "", BASE_URL+"/upload");
-             }
+                LocalFileManager.saveFileLocally(filename, content, username, "create");
+                //FileUtils.chunkAndEncryptAndUpload(filePath.toFile(), "", BASE_URL+"/upload");
+                success = true;
+            } else {
+                LocalFileManager.saveFileLocally(filename, content, username, "update");
+                success = true;
+            }
+
+            if (success) {
+                // ✅ Close window
+                Stage stage = (Stage) fileNameField.getScene().getWindow();
+                stage.close();
+            } else {
+                logger.severe("Error creating file: ");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION,"Error");
+                alert.show();
+            }
 //            ChunkManager.splitAndDistribute(filePath.toFile());
-            showAlert("File created and distributed successfully.");
         } catch (Exception e) {
             logger.severe("Error creating file: " + e.getMessage());
-            showAlert("Failed to create file.");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, e.getMessage());
+            alert.show();
         }
         
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "File saved.");
         alert.show();
-    }
-
-    private void showAlert(String msg) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Info");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 }

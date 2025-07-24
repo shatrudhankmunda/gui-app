@@ -18,6 +18,9 @@ import com.gui.app.model.User;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import java.util.logging.*;
+import com.gui.app.sync.*;
+import javafx.concurrent.Task;
+import java.time.LocalTime;
 
 
 import com.gui.app.util.HttpUploader;
@@ -36,18 +39,10 @@ public class DashboardController {
     private static final String BASE_URL = "http://localhost:8080";
 //    private static final String BASE_URL = "http://host.docker.internal:8080";
 
-    private String currentUser;
-    private String currentRole;
-
-    public void setUserSession(String user, String role) {
-        this.currentUser = user;
-        this.currentRole = role;
-        welcomeLabel.setText("Welcome, " + user + " (" + role + ")");
-        
-    }
+    private User user;
     public void initialize() {
        SessionManager session = SessionManager.getInstance();
-       User user = session.getCurrentUser();
+        user = session.getCurrentUser();
         if (user != null) {
             welcomeLabel.setText("Welcome, " + user.getUsername() + " (" + user.getRole() + ")");
             manageUsersBtn.setVisible(user.getRole().equals("admin"));
@@ -83,9 +78,31 @@ public void startAutoLogoutTimer() {
     @FXML
     private void handleLogout() {
         logger.info("LOGOUT: " + SessionManager.getInstance().getCurrentUser().getUsername());
+        SessionStore.saveLogout(SessionManager.getInstance().getCurrentUser().getUsername());
         SessionManager.getInstance().logout();
         SceneNavigator.loadScene("Cloud Load Balancer - Login", "Login.fxml");
     }
+    @FXML
+private Label syncStatusLabel;
+
+@FXML
+private void handleSyncNow() {
+    syncStatusLabel.setText("Syncing...");
+    Task<Void> syncTask = new Task<>() {
+        @Override
+        protected Void call() {
+            SyncService.syncAll();
+            return null;
+        }
+    };
+
+    syncTask.setOnSucceeded(e -> {
+        syncStatusLabel.setText("Sync completed at " + LocalTime.now().withNano(0));
+       // fileController.refreshFileList();
+    });
+
+    new Thread(syncTask).start();
+}
 
     @FXML
     private void handleUpload() {
@@ -97,8 +114,8 @@ public void startAutoLogoutTimer() {
         if (file != null) {
             try {
                 logger.info("UPLOAD: " + file.getName() + " uploaded by " +
-                              SessionManager.getInstance().getCurrentUser().getUsername());  
-                 FileUtils.chunkAndEncryptAndUpload(file, currentUser, BASE_URL+"/upload");           
+                              user.getUsername());  
+                 FileUtils.chunkAndEncryptAndUpload(file, user.getUsername(), BASE_URL+"/upload");           
                  new Alert(Alert.AlertType.INFORMATION, "Upload successful!").show();
                  logger.info("completed handleUpload() !");
             } catch (Exception e) {
@@ -121,7 +138,7 @@ public void startAutoLogoutTimer() {
             try {
                 logger.info("UPLOAD: " + fileName + " uploaded by " +
                             SessionManager.getInstance().getCurrentUser().getUsername());
-                URL url = new URL(BASE_URL+"/download?username=" + currentUser + "&file=" + fileName);
+                URL url = new URL(BASE_URL+"/download?username=" + user.getUsername() + "&file=" + fileName);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("GET");
 
@@ -230,6 +247,7 @@ private void handleManageUsers() {
 
         stage.show();
     } catch (IOException e) {
+      e.printStackTrace();
       logger.severe("ERROR: " + e.getMessage());
     }
 }
@@ -243,10 +261,12 @@ private void handleFileManager() {
         stage.setScene(new Scene(loader.load()));
 
         FileController controller = loader.getController();
+        controller.setUser(user);
        
 
         stage.show();
-    } catch (IOException e) {
+    } catch (Exception e) {
+      e.printStackTrace();
       logger.severe("ERROR: " + e.getMessage());
     }
 }

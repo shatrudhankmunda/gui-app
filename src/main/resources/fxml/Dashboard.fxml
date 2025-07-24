@@ -15,6 +15,7 @@
       <Button fx:id="manageUsersBtn" layoutX="14.0" layoutY="292.0" onAction="#handleManageUsers" text="Manage Users" />
       <Label fx:id="welcomeLabel" layoutX="27.0" layoutY="20.0" prefHeight="34.0" prefWidth="324.0" text="welcome" />
       <Button layoutX="32.0" layoutY="164.0" onAction="#handleFileManager" prefHeight="26.0" prefWidth="100.0" text="File Manager" />
+      <Button layoutX="367.0" layoutY="24.0" mnemonicParsing="false" text="Sync Now" onAction="#handleSyncNow" />
     </children>
    <opaqueInsets>
       <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />

@@ -25,6 +25,7 @@ public class LoginController {
        User user = SQLiteHelper.validateUser(username, password);
            if (user != null) {
             SessionManager.getInstance().login(user);
+            SessionStore.saveLogin(username);
             logger.info("LOGIN: " + username + " logged in.");
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
             Stage stage = (Stage) usernameField.getScene().getWindow();

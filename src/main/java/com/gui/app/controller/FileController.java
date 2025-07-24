@@ -17,8 +17,10 @@ import com.gui.app.session.*;
 import com.gui.app.model.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import javafx.scene.layout.StackPane;
+import com.gui.app.db.LocalFileManager;
+import java.util.*; 
 
 public class FileController {
     @FXML private TextArea fileContentArea;
@@ -30,107 +32,74 @@ public class FileController {
     private static final String BASE_URL = "http://localhost:8080";
     //private static final String BASE_URL = "http://host.docker.internal:8080";
      
-@FXML private StackPane contentPane;
+   private User user;
+
+   public void setUser(User user){
+     this.user = user;
+   }
 
 @FXML
 private void showCreatePanel() throws IOException {
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FileEditor.fxml"));
-    //Parent panel = loader.load();
-
-    FileEditorController controller = loader.getController();
-    //controller.setMode("create", "", "");
-       Stage stage = new Stage();
-        stage.setTitle("File Management");
-        stage.setScene(new Scene(loader.load()));
-       stage.show();
-//    contentPane.getChildren().setAll(panel);
+    openFileEditor("create", "", "");
 }
 
 @FXML
-private void showUpdatePanel() throws IOException {
+private void showUpdatePanel() throws Exception {
     String selected = fileListView.getSelectionModel().getSelectedItem();
-    if (selected == null) return;
-
-    String content = Files.readString(Paths.get("tempfiles", selected));
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FileEditor.fxml"));
-//    Parent editor = loader.load();
-
-    FileEditorController controller = loader.getController();
-   // controller.setMode("update", selected, content);
-      Stage stage = new Stage();
-        stage.setTitle("File Management");
-        stage.setScene(new Scene(loader.load()));
-       stage.show();
-//    contentPane.getChildren().setAll(editor);
+    if (selected != null){
+    if(!AclManager.canRead(selected, user.getUsername())){
+        showAlert("You don’t have permission to read this file.");
+        return;
+     }
+       String content = Files.readString(Paths.get("tempfiles", selected));
+       openFileEditor("update", selected, content);
+   }else{
+     showAlert("Please select a file !!");
+  }
 }
 
 @FXML
 private void showSharePanel() throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("/fxml/SharePanel.fxml"));
-//    contentPane.getChildren().setAll(sharePanel);
-      Stage stage = new Stage();
-        stage.setTitle("File Management");
-        stage.setScene(new Scene(loader.load()));
-       stage.show();
-}
- 
-//--------------------------------
-
-    @FXML
-    private void handleCreateFile() {
-        String name = fileNameField.getText();
-        String content = fileContentArea.getText();
-
-        if (name.isEmpty()) {
-            showAlert("File name is required.");
-            return;
-        }
-
-        Path filePath = Paths.get("tempfiles", name);
+    String selectedFile = fileListView.getSelectionModel().getSelectedItem();
+    if (selectedFile != null) {
         try {
-            Files.createDirectories(filePath.getParent());
-            Files.writeString(filePath, content);
-            logger.info("Created file: " + name);
-            
-            FileUtils.chunkAndEncryptAndUpload(filePath.toFile(), "", BASE_URL+"/upload"); 
-//            ChunkManager.splitAndDistribute(filePath.toFile());
-            showAlert("File created and distributed successfully.");
-        } catch (Exception e) {
-            logger.severe("Error creating file: " + e.getMessage());
-            showAlert("Failed to create file.");
-        }
-    }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SharePanel.fxml"));
+            Parent root = loader.load();
 
-    @FXML
-    private void handleUpdateFile() {
-       SessionManager session = SessionManager.getInstance();
-       User currentUser = session.getCurrentUser();
-       String filename = fileNameField.getText();
-        try{
-          if (!AclManager.canWrite(filename, currentUser.getUsername())) {
-            showAlert("You do not have write permission.");
-            return;
-            }
+            SharePanelController controller = loader.getController();
+            controller.setMode(selectedFile);
 
-           handleCreateFile();
-        }catch(Exception e ){
-         
-         }
-         // same logic to overwrite
-    }
-
+            Stage stage = new Stage();
+            stage.setTitle("Share File");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+    }   
+  }
     @FXML
     private void handleDeleteFile() {
-        String name = fileNameField.getText();
-        Path filePath = Paths.get("tempfiles", name);
-        try {
-            Files.deleteIfExists(filePath);
-            logger.info("Deleted file: " + name);
-            showAlert("File deleted.");
-        } catch (IOException e) {
-            logger.warning("Delete failed: " + e.getMessage());
-            showAlert("Delete failed.");
-        }
+         String filename = fileListView.getSelectionModel().getSelectedItem();
+    if (filename == null) return;
+
+    String username = user.getUsername();
+    String role = user.getRole();
+
+    // ✅ Only owner or admin can delete
+    if (!AclManager.isOwner(username, filename) && !role.equalsIgnoreCase("admin")) {
+        showAlert("Only the file owner or an admin can delete this file.");
+        return;
+    }
+
+    boolean deleted = true;//DatabaseManager.deleteFile(filename);
+    if (deleted) {
+        LocalFileManager.deleteFileLocally(filename, username);
+        handleRefreshFileList();
+    } else {
+        showAlert("Delete failed.");
+    }
     }
 
     private void showAlert(String msg) {
@@ -144,24 +113,29 @@ private void showSharePanel() throws IOException {
 @FXML
 private void initialize() {
     handleRefreshFileList();
-    fileListView.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
-        if (newVal != null) {
-            loadFile(newVal);
-        }
-    });
 }
 
 @FXML
 private void handleRefreshFileList() {
-    fileListView.getItems().clear();
-    File folder = new File("tempfiles");
-    if (folder.exists() && folder.isDirectory()) {
-        for (File f : folder.listFiles()) {
-            if (f.isFile()) {
-                fileListView.getItems().add(f.getName());
+   List<String> allFiles = new ArrayList<>();
+
+    // Cloud files from DB
+    //allFiles.addAll(DatabaseManager.getAllFilenames());
+
+    // Local files
+    File localDir = new File("tempfiles");
+    if (localDir.exists()) {
+        File[] files = localDir.listFiles(); // or other filters
+        if (files != null) {
+            for (File file : files) {
+                if (!allFiles.contains(file.getName())) {
+                    allFiles.add(file.getName());
+                }
             }
         }
     }
+
+    fileListView.getItems().setAll(allFiles);
 }
 
 private void loadFile(String filename) {
@@ -174,6 +148,27 @@ private void loadFile(String filename) {
         showAlert("Failed to load file.");
     }
 }
+
+public void openFileEditor(String mode, String filename, String content) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FileEditor.fxml"));
+        Parent root = loader.load();
+
+        FileEditorController controller = loader.getController();
+        controller.setMode(mode, filename, content);
+
+        Stage stage = new Stage();
+        stage.setTitle(mode.equals("create") ? "Create New File" : "Update File");
+        stage.setScene(new Scene(root));
+        stage.initModality(Modality.APPLICATION_MODAL); // Block input to other windows
+        stage.setOnHiding(e -> handleRefreshFileList());
+        stage.showAndWait(); // Wait until this window is closed
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 
 }
 

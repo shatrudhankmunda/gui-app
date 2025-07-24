@@ -8,7 +8,7 @@ import java.util.List;
 import com.gui.app.util.SQLiteHelper;
 
 public class UserManager {
-    private static final String DB_URL = "jdbc:sqlite:users.db";
+    private static final String DB_URL = "jdbc:sqlite:comp20081.db";
     private static final String USER = "root";
     private static final String PASS = "rootpass";
 
